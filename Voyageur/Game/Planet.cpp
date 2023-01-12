@@ -3,7 +3,10 @@
 //Constructor.
 //To be made more programatic later.
 
-Planet::Planet(string nameConstructor) {
+Planet::Planet(string nameConstructor, People *peopleConstructor) {
+
+    people=peopleConstructor;
+
     /*Resource tempResource = ;*/
     resources.push_back(new Resource(1, 100, "Bronze"));
     resources.push_back(new Resource(2, 76, "Iron"));
@@ -14,7 +17,7 @@ Planet::Planet(string nameConstructor) {
     *name = nameConstructor;
 
     for (int i = 0; i < 100; i++) {
-        population.push_back(new Person());
+        people->AddPerson();
     }
 
 }

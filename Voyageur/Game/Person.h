@@ -16,10 +16,12 @@ class Person {
 
     string *GetPeopleListTemp();
 
+    unsigned long long id;
+
 public:
     string GetName();
 
-    Person();
+    Person(unsigned long long newId);
 
 };
 

@@ -4,12 +4,14 @@
 #include <vector>
 #include "Resource.h"
 #include "Person.h"
+#include "People.h"
 
 using namespace std;
 
 class Planet {
 
     vector<Person *> population;
+    People *people;
 
 public:
     vector<Resource *> resources;
@@ -21,6 +23,6 @@ public:
 
     string *name = new string;
 
-    Planet(string nameConstructor);
+    Planet(string nameConstructor, People *peopleConstructor);
 };
 

@@ -9,9 +9,10 @@
  * Currently all it does is assign them a random name
  * Hopefully more details will be added later
  */
-Person::Person() {
+Person::Person(unsigned long long newId) {
 //    auto nameArray = GetPeopleListTemp();
 
+    id=newId;
     //Temporary solution to the GetPeopleListTemp not working
     string nameArray[] = {
             "James", "Mary",
