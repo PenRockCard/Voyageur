@@ -29,6 +29,7 @@ void Game_Overview::CreateOverviewWindow() {
 
     End();
 
+    //If the checkbox is checked, the show planet window will be shown Test.
     if (show_planet_window) {
         Planet_Overview planetOverview = Planet_Overview(game);
         planetOverview.Planet_Window_Main();
