@@ -12,6 +12,11 @@ Planet::Planet(string nameConstructor) {
     resources.push_back(new Resource(5, 30, "Addy"));
     resources.push_back(new Resource(6, 15, "Rune"));
     *name = nameConstructor;
+
+    for (int i = 0; i < 100; i++) {
+        population.push_back(new Person());
+    }
+
 }
 
 void Planet::mineResources() {

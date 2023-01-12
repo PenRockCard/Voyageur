@@ -3,10 +3,13 @@
 #include <iostream>
 #include <vector>
 #include "Resource.h"
+#include "Person.h"
 
 using namespace std;
 
 class Planet {
+
+    vector<Person *> population;
 
 public:
     vector<Resource *> resources;
