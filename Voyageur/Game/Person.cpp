@@ -245,3 +245,7 @@ string *Person::GetPeopleListTemp() {
 
     return nameArray;
 }
+
+unsigned long long int Person::GetID() {
+    return ID;
+}
