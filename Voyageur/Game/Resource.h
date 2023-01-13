@@ -27,5 +27,7 @@ public:
     void updateAmount(float amountAdd);
 
     Resource(Resource *pResource);
+
+    int GetTemplateID();
 };
 

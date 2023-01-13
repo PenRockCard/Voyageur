@@ -20,10 +20,17 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
             auto resourceLocation = resourceLocationTable.at(resourceTemplates.at(nextResource)->getID());
             mineableResources[resourceLocation]->updateAmount((rand() % 1000));
         } else {
+            //creates a new resource, and adds it to the minerals vector for the planet
             mineableResources.push_back(new Resource(resourceTemplates.at(nextResource)->getHardness(), (rand() % 1000),
                                                      resourceTemplates.at(nextResource)->getName(),
                                                      resourceTemplates.at(nextResource)->getID()));
+            //adds it to the hashtable
             resourceLocationTable[resourceTemplates.at(nextResource)->getID()] = mineableResources.size() - 1;
+            //adds the currently stored resources on a planet, at the same location as the minerals vector
+            //This allows for it to be easily found based on the hashtable above.
+            storedResources.push_back(new Resource(resourceTemplates.at(nextResource)->getHardness(), 0,
+                                                   resourceTemplates.at(nextResource)->getName(),
+                                                   resourceTemplates.at(nextResource)->getID()));
         }
     }
 
@@ -38,7 +45,8 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
 void Planet::mineResources() {
     //current resource mining is new amount = current amount - 2/hardness
     for (Resource *planetResource: mineableResources) {
-        planetResource->mineResource();
+        auto amt = planetResource->mineResource();
+        storedResources.at(resourceLocationTable.at(planetResource->GetTemplateID()))->updateAmount(amt);
     }
 }
 

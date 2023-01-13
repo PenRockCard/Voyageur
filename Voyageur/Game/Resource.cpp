@@ -33,6 +33,10 @@ float Resource::mineResource() {
 
 }
 
+int Resource::GetTemplateID() {
+    return *templateID;
+}
+
 string Resource::GetName() {
     return *name;
 }

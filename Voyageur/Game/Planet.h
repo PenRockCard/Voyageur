@@ -16,6 +16,7 @@ class Planet {
     People *people;
     unsigned long long ID;
     vector<Resource *> mineableResources;
+    vector<Resource *> storedResources;
     unordered_map<int, int> resourceLocationTable;
 
     static bool compareResourceAmount(Resource r1, Resource r2);
@@ -32,8 +33,6 @@ public:
     void mineResources();
 
     unsigned long long GetID();
-
-    vector<Resource *> GetCurrentResources();
 
     string *name = new string;
 

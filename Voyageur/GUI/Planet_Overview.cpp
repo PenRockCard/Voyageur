@@ -62,7 +62,7 @@ void Planet_Overview::Planet_Window_Main() {
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
                     ImGui::EndTabItem();
                 }
-                if (ImGui::BeginTabItem("Resources")) {
+                if (ImGui::BeginTabItem("Minerals")) {
                     //table
                     static ImGuiTableFlags flags = ImGuiTableFlags_SizingStretchSame | ImGuiTableFlags_Resizable |
                                                    ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV |
@@ -126,6 +126,10 @@ void Planet_Overview::Planet_Window_Main() {
                         }
                     }
 
+                    ImGui::EndTabItem();
+                }
+
+                if (ImGui::BeginTabItem("Stored Resources")) {
                     ImGui::EndTabItem();
                 }
 
