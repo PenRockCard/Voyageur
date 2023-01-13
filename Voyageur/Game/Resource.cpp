@@ -1,10 +1,12 @@
 #include "Resource.h"
 #include <iostream>
 
-Resource::Resource(float hardnessConstructor, float amountConstructor, string nameConstructor) {
+Resource::Resource(float hardnessConstructor, float amountConstructor, string nameConstructor,
+                   int templateIDConstructor) {
     *hardness = hardnessConstructor;
     *amount = amountConstructor;
     *name = nameConstructor;
+    *templateID = templateIDConstructor;
 }
 
 float Resource::mineResource() {
@@ -27,7 +29,7 @@ float Resource::mineResource() {
         return amtReturned;
     }
 
-    return amtBefore-amtAfter;
+    return amtBefore - amtAfter;
 
 }
 
@@ -41,6 +43,16 @@ float Resource::GetHardness() {
 
 float Resource::GetAmount() {
     return *amount;
+}
+
+void Resource::updateAmount(float amountAdd) {
+
+    *amount+=amountAdd;
+
+    if (*amount<0) {
+        *amount=0;
+    }
+
 }
 
 //Resource::Resource()

@@ -6,6 +6,7 @@
 #include "Person.h"
 #include "People.h"
 #include "ResourceTemplate.h"
+#include <unordered_map>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ class Planet {
     People *people;
     unsigned long long ID;
     vector<Resource *> mineableResources;
+    unordered_map<int,int> resourceLocationTable;
 
 
 public:

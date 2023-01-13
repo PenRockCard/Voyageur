@@ -12,9 +12,18 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
 
     int numberResources = 20;
     for (int i = 0; i < numberResources; i++) {
+
         int nextResource = rand() % resourceTemplates.size();
-        mineableResources.push_back(new Resource(resourceTemplates.at(nextResource)->getHardness(), (rand() % 1000),
-                                                 resourceTemplates.at(nextResource)->getName()));
+
+        if (resourceLocationTable.find(resourceTemplates.at(nextResource)->getID())!=resourceLocationTable.end()) {
+            auto resourceLocation = resourceLocationTable.at(resourceTemplates.at(nextResource)->getID());
+            mineableResources[resourceLocation]->updateAmount((rand() % 1000));
+        } else {
+            mineableResources.push_back(new Resource(resourceTemplates.at(nextResource)->getHardness(), (rand() % 1000),
+                                                     resourceTemplates.at(nextResource)->getName(),
+                                                     resourceTemplates.at(nextResource)->getID()));
+            resourceLocationTable[resourceTemplates.at(nextResource)->getID()] = mineableResources.size() - 1;
+        }
     }
 
     *name = nameConstructor;
