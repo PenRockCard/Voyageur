@@ -3,19 +3,20 @@
 //Constructor.
 //To be made more programatic later.
 
-Planet::Planet(string nameConstructor, People *peopleConstructor,unsigned long long planetIDConstructor) {
+Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
+               vector<ResourceTemplate *> resourceTemplates) {
 
-    ID=planetIDConstructor;
+    ID = planetIDConstructor;
 
-    people=peopleConstructor;
+    people = peopleConstructor;
 
-    /*Resource tempResource = ;*/
-    mineableResources.push_back(new Resource(1, 100, "Bronze"));
-    mineableResources.push_back(new Resource(2, 76, "Iron"));
-    mineableResources.push_back(new Resource(3, 50, "Steel"));
-    mineableResources.push_back(new Resource(4, 40, "Mithril"));
-    mineableResources.push_back(new Resource(5, 30, "Addy"));
-    mineableResources.push_back(new Resource(6, 15, "Rune"));
+    int numberResources = 20;
+    for (int i = 0; i < numberResources; i++) {
+        int nextResource = rand() % resourceTemplates.size();
+        mineableResources.push_back(new Resource(resourceTemplates.at(nextResource)->getHardness(), (rand() % 1000),
+                                                 resourceTemplates.at(nextResource)->getName()));
+    }
+
     *name = nameConstructor;
 
     for (int i = 0; i < 100; i++) {

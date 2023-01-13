@@ -6,12 +6,16 @@
 #include <thread>
 #include "UpdateTime.h"
 #include "People.h"
+#include "ResourceTemplate.h"
 
 using namespace std;
 
 class MainGame {
 
     unsigned long long nextPlanetID;
+    int nextResourceID;
+    vector<ResourceTemplate *> resourceTemplates;
+    void GetResourceTemplates();
 
 public:
     vector<Planet *> planets;

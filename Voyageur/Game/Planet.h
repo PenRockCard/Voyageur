@@ -5,6 +5,7 @@
 #include "Resource.h"
 #include "Person.h"
 #include "People.h"
+#include "ResourceTemplate.h"
 
 using namespace std;
 
@@ -27,7 +28,7 @@ public:
 
     string *name = new string;
 
-    Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor);
+    Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor, vector<ResourceTemplate *> resourceTemplates);
 
     vector<Person> GetPeople();
 };
