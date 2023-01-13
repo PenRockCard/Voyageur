@@ -11,6 +11,8 @@ using namespace std;
 
 class MainGame {
 
+    unsigned long long nextPlanetID;
+
 public:
     vector<Planet *> planets;
 

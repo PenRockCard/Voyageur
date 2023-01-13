@@ -2,9 +2,10 @@
 
 
 MainGame::MainGame() {
+    nextPlanetID=0;
     people = People();
-    planets.push_back(new Planet("Neptune", &people));
-    planets.push_back(new Planet("Mars", &people));
+    planets.push_back(new Planet("Neptune", &people,nextPlanetID++));
+    planets.push_back(new Planet("Mars", &people,nextPlanetID++));
     updateTime = new UpdateTime();
 }
 

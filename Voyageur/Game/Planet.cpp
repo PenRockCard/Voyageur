@@ -3,7 +3,9 @@
 //Constructor.
 //To be made more programatic later.
 
-Planet::Planet(string nameConstructor, People *peopleConstructor) {
+Planet::Planet(string nameConstructor, People *peopleConstructor,unsigned long long IDConstructor) {
+
+    ID=IDConstructor;
 
     people=peopleConstructor;
 
@@ -31,6 +33,10 @@ void Planet::mineResources() {
 
 vector<Resource *> Planet::GetCurrentResources() {
     return vector<Resource *>();
+}
+
+unsigned long long Planet::GetID() {
+    return ID;
 }
 
 
