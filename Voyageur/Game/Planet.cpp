@@ -39,4 +39,12 @@ unsigned long long Planet::GetID() {
     return ID;
 }
 
+vector<Person> Planet::GetPeople() {
+    vector<Person> peopleList;
+
+    peopleList = people->getPeoplePlanet(ID);
+
+    return peopleList;
+}
+
 

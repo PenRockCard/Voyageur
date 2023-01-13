@@ -20,6 +20,7 @@ public:
     void AddPerson(unsigned long long PlanetID);
     People();
 
+    vector<Person> getPeoplePlanet(unsigned long long int planetID);
 };
 
 

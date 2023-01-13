@@ -23,3 +23,13 @@ unsigned long long People::GetNextID() {
 People::People() {
     nextID=0;
 }
+
+vector<Person> People::getPeoplePlanet(unsigned long long planetID) {
+    vector<Person> returnList;
+    for (Person* elem:peopleList) {
+        if (elem->GetPlanet()==planetID) {
+            returnList.push_back(*elem);
+        }
+    }
+    return returnList;
+}

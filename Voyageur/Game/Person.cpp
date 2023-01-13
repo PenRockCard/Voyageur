@@ -129,6 +129,10 @@ string Person::GetName() {
     return name;
 }
 
+unsigned long long Person::GetPlanet() {
+    return planetID;
+}
+
 /**
  * Temporary solution to return an array of people.
  * Not currently working.

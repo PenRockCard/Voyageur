@@ -25,6 +25,7 @@ public:
 
     Person(unsigned long long newId, unsigned long long planetIDConstruct);
 
+    unsigned long long int GetPlanet();
 };
 
 

@@ -10,7 +10,6 @@ using namespace std;
 
 class Planet {
 
-    vector<Person *> population;
     People *people;
     unsigned long long ID;
 
@@ -27,5 +26,7 @@ public:
     string *name = new string;
 
     Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor);
+
+    vector<Person> GetPeople();
 };
 

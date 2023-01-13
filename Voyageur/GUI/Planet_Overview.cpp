@@ -73,6 +73,14 @@ void Planet_Overview::Planet_Window_Main() {
                     ImGui::Text("ID: 0123456789");
                     ImGui::EndTabItem();
                 }
+
+                if (ImGui::BeginTabItem("People")) {
+
+
+
+                    ImGui::EndTabItem();
+                }
+
                 ImGui::EndTabBar();
             }
             ImGui::EndChild();
