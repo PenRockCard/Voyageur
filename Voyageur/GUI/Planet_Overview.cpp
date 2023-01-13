@@ -76,7 +76,10 @@ void Planet_Overview::Planet_Window_Main() {
 
                 if (ImGui::BeginTabItem("People")) {
 
-
+                    vector<Person> peopleList=game.planets.at(selected)->GetPeople();
+                    for (size_t row = 0; row < game.planets.at(selected)->GetPeople().size(); row++) {
+                        ImGui::Text((peopleList.at(row).GetName()).c_str());
+                    }
 
                     ImGui::EndTabItem();
                 }
