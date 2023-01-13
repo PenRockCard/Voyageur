@@ -78,7 +78,25 @@ void Planet_Overview::Planet_Window_Main() {
 
                     vector<Person> peopleList=game.planets.at(selected)->GetPeople();
                     for (size_t row = 0; row < game.planets.at(selected)->GetPeople().size(); row++) {
-                        ImGui::Text((peopleList.at(row).GetName()).c_str());
+
+                        /**
+                         * This part is more a temporary solution to show off how right clicking something to bring up a pop up would work
+                         * The double hashes in the selectable are needed, the popup (and most ImGui parts I think) use the labels as their unique ids
+                         * This can lead to collisions, causing them to be called multiple times in some scenarios
+                         * Here that scenario are 2+ people sharing the same name, which is solved by silently attaching their id at the end
+                         */
+                        ImGui::Selectable((peopleList.at(row).GetName()+"##"+to_string(peopleList.at(row).GetID())).c_str());
+                        if (ImGui::IsItemHovered()) {
+                            ImGui::SetTooltip("Right-click to open popup");
+                        }
+                        if (ImGui::BeginPopupContextItem()) { // <-- use last item id as popup id
+                            ImGui::Text(to_string(peopleList.at(row).GetPlanet()).c_str());
+                            ImGui::Text((peopleList.at(row).GetName()).c_str());
+                            ImGui::Text(to_string(peopleList.at(row).GetID()).c_str());
+                            if (ImGui::Button("Close"))
+                                ImGui::CloseCurrentPopup();
+                            ImGui::EndPopup();
+                        }
                     }
 
                     ImGui::EndTabItem();
