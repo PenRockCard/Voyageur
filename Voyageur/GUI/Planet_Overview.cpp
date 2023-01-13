@@ -84,6 +84,8 @@ void Planet_Overview::Planet_Window_Main() {
                          * The double hashes in the selectable are needed, the popup (and most ImGui parts I think) use the labels as their unique ids
                          * This can lead to collisions, causing them to be called multiple times in some scenarios
                          * Here that scenario are 2+ people sharing the same name, which is solved by silently attaching their id at the end
+                         * More info here:
+                         * https://github.com/ocornut/imgui/blob/9d6b2b096b20fa654c84fd8bb4d9631c250b33d6/imgui.cpp#L637
                          */
                         ImGui::Selectable((peopleList.at(row).GetName()+"##"+to_string(peopleList.at(row).GetID())).c_str());
                         if (ImGui::IsItemHovered()) {
