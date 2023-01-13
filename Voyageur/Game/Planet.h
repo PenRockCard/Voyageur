@@ -12,9 +12,10 @@ class Planet {
 
     People *people;
     unsigned long long ID;
+    vector<Resource *> minerableResources;
 
 public:
-    vector<Resource *> resources;
+
     int *temperature = new int;
 
     void mineResources();
