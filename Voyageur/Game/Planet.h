@@ -12,7 +12,8 @@ class Planet {
 
     People *people;
     unsigned long long ID;
-    vector<Resource *> minerableResources;
+    vector<Resource *> mineableResources;
+
 
 public:
 

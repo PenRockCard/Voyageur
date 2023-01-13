@@ -10,12 +10,12 @@ Planet::Planet(string nameConstructor, People *peopleConstructor,unsigned long l
     people=peopleConstructor;
 
     /*Resource tempResource = ;*/
-    minerableResources.push_back(new Resource(1, 100, "Bronze"));
-    minerableResources.push_back(new Resource(2, 76, "Iron"));
-    minerableResources.push_back(new Resource(3, 50, "Steel"));
-    minerableResources.push_back(new Resource(4, 40, "Mithril"));
-    minerableResources.push_back(new Resource(5, 30, "Addy"));
-    minerableResources.push_back(new Resource(6, 15, "Rune"));
+    mineableResources.push_back(new Resource(1, 100, "Bronze"));
+    mineableResources.push_back(new Resource(2, 76, "Iron"));
+    mineableResources.push_back(new Resource(3, 50, "Steel"));
+    mineableResources.push_back(new Resource(4, 40, "Mithril"));
+    mineableResources.push_back(new Resource(5, 30, "Addy"));
+    mineableResources.push_back(new Resource(6, 15, "Rune"));
     *name = nameConstructor;
 
     for (int i = 0; i < 100; i++) {
@@ -26,13 +26,13 @@ Planet::Planet(string nameConstructor, People *peopleConstructor,unsigned long l
 
 void Planet::mineResources() {
     //current resource mining is new amount = current amount - 2/hardness
-    for (Resource *planetResource: minerableResources) {
+    for (Resource *planetResource: mineableResources) {
         planetResource->mineResource();
     }
 }
 
 vector<Resource *> Planet::GetCurrentResources() {
-    return minerableResources;
+    return mineableResources;
 }
 
 unsigned long long Planet::GetID() {
