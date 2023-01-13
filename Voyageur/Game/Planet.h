@@ -7,6 +7,7 @@
 #include "People.h"
 #include "ResourceTemplate.h"
 #include <unordered_map>
+#include "../Constants.h"
 
 using namespace std;
 
@@ -15,7 +16,13 @@ class Planet {
     People *people;
     unsigned long long ID;
     vector<Resource *> mineableResources;
-    unordered_map<int,int> resourceLocationTable;
+    unordered_map<int, int> resourceLocationTable;
+
+    static bool compareResourceAmount(Resource r1, Resource r2);
+
+    static bool compareResourceName(Resource r1, Resource r2);
+
+    static bool compareResourceHardness(Resource r1, Resource r2);
 
 
 public:
@@ -30,8 +37,11 @@ public:
 
     string *name = new string;
 
-    Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor, vector<ResourceTemplate *> resourceTemplates);
+    Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
+           vector<ResourceTemplate *> resourceTemplates);
 
     vector<Person> GetPeople();
+
+    vector<Resource *> GetCurrentResources(int order);
 };
 

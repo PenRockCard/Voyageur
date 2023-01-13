@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Planet.h"
 
 //Constructor.
@@ -15,7 +16,7 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
 
         int nextResource = rand() % resourceTemplates.size();
 
-        if (resourceLocationTable.find(resourceTemplates.at(nextResource)->getID())!=resourceLocationTable.end()) {
+        if (resourceLocationTable.find(resourceTemplates.at(nextResource)->getID()) != resourceLocationTable.end()) {
             auto resourceLocation = resourceLocationTable.at(resourceTemplates.at(nextResource)->getID());
             mineableResources[resourceLocation]->updateAmount((rand() % 1000));
         } else {
@@ -41,8 +42,28 @@ void Planet::mineResources() {
     }
 }
 
-vector<Resource *> Planet::GetCurrentResources() {
-    return mineableResources;
+/**
+ * Need to add iterators and stuff for this...
+ * @param order 0 or leave blank for unordered, 1 for order by name, 2 for order by amount, 3 for order by hardness
+ * @return ordered list of resources
+ */
+vector<Resource *> Planet::GetCurrentResources(int order = RESOURCE_ORDER_NONE) {
+    auto resourcesOrdered = mineableResources;
+    switch (order) {
+        case RESOURCE_ORDER_NONE:
+            return mineableResources;
+            break;
+        case RESOURCE_ORDER_NAME:
+            sort(resourcesOrdered.begin(), resourcesOrdered.end(), compareResourceName);
+            break;
+        case RESOURCE_ORDER_AMOUNT:
+            sort(resourcesOrdered.begin(), resourcesOrdered.end(), compareResourceAmount);
+            break;
+        case RESOURCE_ORDER_HARDNESS:
+            sort(resourcesOrdered.begin(), resourcesOrdered.end(), compareResourceHardness);
+            break;
+    }
+    return resourcesOrdered;
 }
 
 unsigned long long Planet::GetID() {
@@ -56,5 +77,18 @@ vector<Person> Planet::GetPeople() {
 
     return peopleList;
 }
+
+bool Planet::compareResourceAmount(Resource r1, Resource r2) {
+    return (r1.GetAmount() < r2.GetAmount());
+}
+
+bool Planet::compareResourceName(Resource r1, Resource r2) {
+    return (r1.GetName() < r2.GetName());
+}
+
+bool Planet::compareResourceHardness(Resource r1, Resource r2) {
+    return (r1.GetHardness() < r2.GetHardness());
+}
+
 
 

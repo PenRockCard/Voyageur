@@ -11,14 +11,18 @@
 #include <dxgi1_4.h>
 #include <tchar.h>
 #include "../Game/MainGame.h"
-#include "Planet_Overview.h"
+
+static int ResourceSortOrder;
 
 class Game_Overview {
     MainGame game;
+protected:
     bool show_planet_window = false;
 public:
     Game_Overview(MainGame &gameConstruct);
 
     void CreateOverviewWindow();
+
+
 };
 

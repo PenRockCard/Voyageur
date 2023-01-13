@@ -55,8 +55,11 @@ void Resource::updateAmount(float amountAdd) {
 
 }
 
-//Resource::Resource()
-//{
-//}
+Resource::Resource(Resource *pResource) {
+    *hardness = pResource->GetHardness();
+    *amount = pResource->GetAmount();
+    *name = pResource->GetName();
+}
+
 
 

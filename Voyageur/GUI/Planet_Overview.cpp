@@ -1,10 +1,10 @@
 #include "Planet_Overview.h"
-#include "../Game/MainGame.h"
 
 using namespace std;
 using namespace ImGui;
 
-Planet_Overview::Planet_Overview(MainGame &gameConstruct) {
+Planet_Overview::Planet_Overview(MainGame &gameConstruct) : Game_Overview(gameConstruct) {
+//    ResourceSortOrder = 0;
     show_planet_overview_window = false;
     game = gameConstruct;
 }
@@ -15,7 +15,26 @@ void Planet_Overview::Planet_Window_Main() {
     if (show_planet_overview_window) {
         ImGui::SetNextWindowSize(ImVec2(500, 440), ImGuiCond_FirstUseEver);
         Begin("Planet Overview",
-              &show_planet_overview_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+              &show_planet_overview_window,
+              ImGuiWindowFlags_MenuBar);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+        if (ImGui::BeginMenuBar()) {
+            if (ImGui::BeginMenu("Resource Sort Order")) {
+                if (ImGui::MenuItem("None", NULL, (ResourceSortOrder == RESOURCE_ORDER_NONE))) {
+                    ResourceSortOrder = RESOURCE_ORDER_NONE;
+                }
+                if (ImGui::MenuItem("Name", NULL, (ResourceSortOrder == RESOURCE_ORDER_NAME))) {
+                    ResourceSortOrder = RESOURCE_ORDER_NAME;
+                }
+                if (ImGui::MenuItem("Amount", NULL, (ResourceSortOrder == RESOURCE_ORDER_AMOUNT))) {
+                    ResourceSortOrder = RESOURCE_ORDER_AMOUNT;
+                }
+                if (ImGui::MenuItem("Hardness", NULL, (ResourceSortOrder == RESOURCE_ORDER_HARDNESS))) {
+                    ResourceSortOrder = RESOURCE_ORDER_HARDNESS;
+                }
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
 
         // Left
         static int selected = 0;
@@ -50,20 +69,25 @@ void Planet_Overview::Planet_Window_Main() {
                                                    ImGuiTableFlags_ContextMenuInBody;
                     //PopStyleCompact();
 
-                    if (ImGui::BeginTable("table1", 3, flags)) {
+                    if (ImGui::BeginTable("ResourceTable", 3, flags)) {
 
-                        for (size_t row = 0; row < game.planets.at(selected)->GetCurrentResources().size(); row++) {
+                        for (size_t row = 0;
+                             row < game.planets.at(selected)->GetCurrentResources(ResourceSortOrder).size(); row++) {
                             ImGui::TableNextRow();
                             for (int column = 0; column < 3; column++) {
                                 ImGui::TableSetColumnIndex(column);
                                 if (column == 0) {
-                                    ImGui::Text("%s", (game.planets.at(selected)->GetCurrentResources().at(row)->GetName()).c_str());
+                                    ImGui::Text("%s",
+                                                (game.planets.at(selected)->GetCurrentResources(ResourceSortOrder).at(
+                                                        row)->GetName()).c_str());
                                 } else if (column == 1) {
                                     ImGui::Text(
-                                            "%s", to_string(game.planets.at(selected)->GetCurrentResources().at(row)->GetAmount()).c_str());
+                                            "%s", to_string(game.planets.at(selected)->GetCurrentResources(
+                                                    ResourceSortOrder).at(row)->GetAmount()).c_str());
                                 } else if (column == 2) {
                                     ImGui::Text(
-                                            "%s", to_string(game.planets.at(selected)->GetCurrentResources().at(row)->GetHardness()).c_str());
+                                            "%s", to_string(game.planets.at(selected)->GetCurrentResources(
+                                                    ResourceSortOrder).at(row)->GetHardness()).c_str());
                                 }
                             }
                         }
@@ -76,7 +100,7 @@ void Planet_Overview::Planet_Window_Main() {
 
                 if (ImGui::BeginTabItem("People")) {
 
-                    vector<Person> peopleList=game.planets.at(selected)->GetPeople();
+                    vector<Person> peopleList = game.planets.at(selected)->GetPeople();
                     for (size_t row = 0; row < game.planets.at(selected)->GetPeople().size(); row++) {
 
                         /**
@@ -87,7 +111,8 @@ void Planet_Overview::Planet_Window_Main() {
                          * More info here:
                          * https://github.com/ocornut/imgui/blob/9d6b2b096b20fa654c84fd8bb4d9631c250b33d6/imgui.cpp#L637
                          */
-                        ImGui::Selectable((peopleList.at(row).GetName()+"##"+to_string(peopleList.at(row).GetID())).c_str());
+                        ImGui::Selectable(
+                                (peopleList.at(row).GetName() + "##" + to_string(peopleList.at(row).GetID())).c_str());
                         if (ImGui::IsItemHovered()) {
                             ImGui::SetTooltip("Right-click to open popup");
                         }

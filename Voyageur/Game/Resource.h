@@ -25,5 +25,7 @@ public:
     float mineResource();
 
     void updateAmount(float amountAdd);
+
+    Resource(Resource *pResource);
 };
 

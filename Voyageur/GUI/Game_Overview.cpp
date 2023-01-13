@@ -1,4 +1,5 @@
 #include "Game_Overview.h"
+#include "Planet_Overview.h"
 
 using namespace std;
 using namespace ImGui;
@@ -7,6 +8,8 @@ Game_Overview::Game_Overview(MainGame &gameConstruct) {
 
     show_planet_window = false;
     game = gameConstruct;
+
+    ResourceSortOrder = 0;
 
 }
 
@@ -29,7 +32,7 @@ void Game_Overview::CreateOverviewWindow() {
 
     End();
 
-    //If the checkbox is checked, the show planet window will be shown Test.
+    //If the checkbox is checked, the show planet window will be shown.
     if (show_planet_window) {
         Planet_Overview planetOverview = Planet_Overview(game);
         planetOverview.Planet_Window_Main();

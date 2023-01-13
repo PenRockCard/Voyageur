@@ -7,10 +7,13 @@
 #include <dxgi1_4.h>
 #include <tchar.h>
 #include "../Game/MainGame.h"
+#include "../Constants.h"
+#include "Game_Overview.h"
 
-class Planet_Overview {
+class Planet_Overview: public Game_Overview {
     MainGame game;
     bool show_planet_overview_window = false;
+
 public:
     Planet_Overview(MainGame &gameConstruct);
 
