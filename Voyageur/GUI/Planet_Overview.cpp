@@ -57,13 +57,13 @@ void Planet_Overview::Planet_Window_Main() {
                             for (int column = 0; column < 3; column++) {
                                 ImGui::TableSetColumnIndex(column);
                                 if (column == 0) {
-                                    ImGui::Text((*game.planets.at(selected)->GetCurrentResources().at(row)->name).c_str());
+                                    ImGui::Text("%s", (game.planets.at(selected)->GetCurrentResources().at(row)->GetName()).c_str());
                                 } else if (column == 1) {
                                     ImGui::Text(
-                                            to_string(*game.planets.at(selected)->GetCurrentResources().at(row)->amount).c_str());
+                                            "%s", to_string(game.planets.at(selected)->GetCurrentResources().at(row)->GetAmount()).c_str());
                                 } else if (column == 2) {
                                     ImGui::Text(
-                                            to_string(*game.planets.at(selected)->GetCurrentResources().at(row)->hardness).c_str());
+                                            "%s", to_string(game.planets.at(selected)->GetCurrentResources().at(row)->GetHardness()).c_str());
                                 }
                             }
                         }

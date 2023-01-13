@@ -32,7 +32,7 @@ void Planet::mineResources() {
 }
 
 vector<Resource *> Planet::GetCurrentResources() {
-    return vector<Resource *>();
+    return minerableResources;
 }
 
 unsigned long long Planet::GetID() {
