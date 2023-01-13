@@ -17,7 +17,7 @@ class People {
 public:
 
     unsigned long long GetNextID();
-    void AddPerson();
+    void AddPerson(unsigned long long PlanetID);
     People();
 
 };

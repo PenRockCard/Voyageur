@@ -4,9 +4,9 @@
 
 #include "People.h"
 
-void People::AddPerson() {
+void People::AddPerson(unsigned long long PlanetID) {
 
-    peopleList.push_back(new Person(GetNextID()));
+    peopleList.push_back(new Person(GetNextID(),PlanetID));
 
 }
 

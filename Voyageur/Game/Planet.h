@@ -26,6 +26,6 @@ public:
 
     string *name = new string;
 
-    Planet(string nameConstructor, People *peopleConstructor, unsigned long long IDConstructor);
+    Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor);
 };
 

@@ -3,9 +3,9 @@
 //Constructor.
 //To be made more programatic later.
 
-Planet::Planet(string nameConstructor, People *peopleConstructor,unsigned long long IDConstructor) {
+Planet::Planet(string nameConstructor, People *peopleConstructor,unsigned long long planetIDConstructor) {
 
-    ID=IDConstructor;
+    ID=planetIDConstructor;
 
     people=peopleConstructor;
 
@@ -19,7 +19,7 @@ Planet::Planet(string nameConstructor, People *peopleConstructor,unsigned long l
     *name = nameConstructor;
 
     for (int i = 0; i < 100; i++) {
-        people->AddPerson();
+        people->AddPerson(planetIDConstructor);
     }
 
 }

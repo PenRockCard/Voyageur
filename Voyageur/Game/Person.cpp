@@ -9,10 +9,10 @@
  * Currently all it does is assign them a random name
  * Hopefully more details will be added later
  */
-Person::Person(unsigned long long newId) {
+Person::Person(unsigned long long newId, unsigned long long planetIDConstruct) {
 //    auto nameArray = GetPeopleListTemp();
-
-    id=newId;
+    planetID=planetIDConstruct;
+    ID=newId;
     //Temporary solution to the GetPeopleListTemp not working
     string nameArray[] = {
             "James", "Mary",

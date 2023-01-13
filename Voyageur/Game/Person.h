@@ -16,12 +16,14 @@ class Person {
 
     string *GetPeopleListTemp();
 
-    unsigned long long id;
+    unsigned long long ID;
+
+    unsigned long long planetID;
 
 public:
     string GetName();
 
-    Person(unsigned long long newId);
+    Person(unsigned long long newId, unsigned long long planetIDConstruct);
 
 };
 
