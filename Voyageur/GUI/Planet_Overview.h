@@ -17,6 +17,6 @@ class Planet_Overview: public Game_Overview {
 public:
     Planet_Overview(MainGame &gameConstruct);
 
-    void Planet_Window_Main();
+    bool Planet_Window_Main();
 };
 

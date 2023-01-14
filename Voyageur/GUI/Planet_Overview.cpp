@@ -9,11 +9,11 @@ Planet_Overview::Planet_Overview(MainGame &gameConstruct) : Game_Overview(gameCo
     game = gameConstruct;
 }
 
-void Planet_Overview::Planet_Window_Main() {
+bool Planet_Overview::Planet_Window_Main() {
 
     show_planet_overview_window = true;
     if (show_planet_overview_window) {
-        ImGui::SetNextWindowSize(ImVec2(500, 440), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowSize(ImVec2(600, 500), ImGuiCond_FirstUseEver);
         Begin("Planet Overview",
               &show_planet_overview_window,
               ImGuiWindowFlags_MenuBar);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
@@ -69,7 +69,7 @@ void Planet_Overview::Planet_Window_Main() {
                                                    ImGuiTableFlags_ContextMenuInBody;
                     //PopStyleCompact();
 
-                    if (ImGui::BeginTable("ResourceTable", 3, flags)) {
+                    if (ImGui::BeginTable("MineralTable", 3, flags)) {
 
                         for (size_t row = 0;
                              row < game.planets.at(selected)->GetCurrentResources(ResourceSortOrder).size(); row++) {
@@ -93,8 +93,6 @@ void Planet_Overview::Planet_Window_Main() {
                         }
                         ImGui::EndTable();
                     }
-
-                    ImGui::Text("ID: 0123456789");
                     ImGui::EndTabItem();
                 }
 
@@ -136,17 +134,19 @@ void Planet_Overview::Planet_Window_Main() {
                 ImGui::EndTabBar();
             }
             ImGui::EndChild();
-            if (ImGui::Button("Revert")) {}
-            ImGui::SameLine();
-            if (ImGui::Button("Save")) {}
             ImGui::EndGroup();
         }
 
 
         if (Button("Close Me")) {
             show_planet_overview_window = false;
+//            End();
+//            return false;
         }
         End();
+
+
+        return show_planet_overview_window;
     }
 
 }
