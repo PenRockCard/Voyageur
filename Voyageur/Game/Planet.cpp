@@ -74,6 +74,25 @@ vector<Resource *> Planet::GetCurrentResources(int order = RESOURCE_ORDER_NONE) 
     return resourcesOrdered;
 }
 
+vector<Resource *> Planet::GetStoredResources(int order = RESOURCE_ORDER_NONE) {
+    auto resourcesOrdered = storedResources;
+    switch (order) {
+        case RESOURCE_ORDER_NONE:
+            return storedResources;
+            break;
+        case RESOURCE_ORDER_NAME:
+            sort(resourcesOrdered.begin(), resourcesOrdered.end(), compareResourceName);
+            break;
+        case RESOURCE_ORDER_AMOUNT:
+            sort(resourcesOrdered.begin(), resourcesOrdered.end(), compareResourceAmount);
+            break;
+        case RESOURCE_ORDER_HARDNESS:
+            sort(resourcesOrdered.begin(), resourcesOrdered.end(), compareResourceHardness);
+            break;
+    }
+    return resourcesOrdered;
+}
+
 unsigned long long Planet::GetID() {
     return ID;
 }

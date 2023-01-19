@@ -42,5 +42,7 @@ public:
     vector<Person> GetPeople();
 
     vector<Resource *> GetCurrentResources(int order);
+
+    vector<Resource *> GetStoredResources(int order);
 };
 

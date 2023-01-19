@@ -128,6 +128,36 @@ bool Planet_Overview::Planet_Window_Main() {
                 }
 
                 if (ImGui::BeginTabItem("Stored Resources")) {
+
+                    static ImGuiTableFlags flags = ImGuiTableFlags_SizingStretchSame | ImGuiTableFlags_Resizable |
+                                                   ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV |
+                                                   ImGuiTableFlags_ContextMenuInBody;
+
+                    if (ImGui::BeginTable("StoredMineralTable", 3, flags)) {
+
+                        for (size_t row = 0;
+                             row < game.planets.at(selected)->GetStoredResources(ResourceSortOrder).size(); row++) {
+                            ImGui::TableNextRow();
+                            for (int column = 0; column < 3; column++) {
+                                ImGui::TableSetColumnIndex(column);
+                                if (column == 0) {
+                                    ImGui::Text("%s",
+                                                (game.planets.at(selected)->GetStoredResources(ResourceSortOrder).at(
+                                                        row)->GetName()).c_str());
+                                } else if (column == 1) {
+                                    ImGui::Text(
+                                            "%s", to_string(game.planets.at(selected)->GetStoredResources(
+                                                    ResourceSortOrder).at(row)->GetAmount()).c_str());
+                                } else if (column == 2) {
+                                    ImGui::Text(
+                                            "%s", to_string(game.planets.at(selected)->GetStoredResources(
+                                                    ResourceSortOrder).at(row)->GetHardness()).c_str());
+                                }
+                            }
+                        }
+                        ImGui::EndTable();
+                    }
+
                     ImGui::EndTabItem();
                 }
 
