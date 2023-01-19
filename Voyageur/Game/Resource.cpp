@@ -11,7 +11,7 @@ Resource::Resource(float hardnessConstructor, float amountConstructor, string na
 
 float Resource::mineResource() {
 
-    if (*this->amount < 0) {
+    if (*this->amount <= 0) {
         return 0;
     }
 
