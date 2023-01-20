@@ -9,6 +9,8 @@ using namespace chrono;
 class UpdateTime {
     //The current minimum update time.
     chrono::nanoseconds timePeriod;
+    chrono::nanoseconds timePeriodDesired;
+    chrono::nanoseconds timePeriodActual;
 
     //The start time of the current update.
     steady_clock::time_point updateStartTime;
