@@ -4,7 +4,7 @@ using namespace std;
 using namespace ImGui;
 
 Gui_Top_Menu::Gui_Top_Menu(MainGame &gameConstruct) {
-    game = gameConstruct;
+    game = &gameConstruct;
     RecentUPS.resize(100);
 }
 
@@ -93,9 +93,9 @@ void Gui_Top_Menu::CustomUPSWindow() {
 
 void Gui_Top_Menu::UpdateUPS(int UPSTime) {
     if (UPSTime == NULL) {
-        game.updateTime->SetUpdateTime(NULL);
+        game->updateTime->SetUpdateTime(NULL);
     } else {
-        game.updateTime->SetUpdateTime(1e9 / UPSTime);
+        game->updateTime->SetUpdateTime(1e9 / UPSTime);
     }
 }
 
@@ -124,7 +124,7 @@ void Gui_Top_Menu::UPSWindow() {
     //vector<long long>::iterator it;
     //it = RecentUPS.begin();
     //RecentUPS.erase(500);
-    RecentUPS.at(vectorLocation) = game.updateTime->GetUpdateTime();
+    RecentUPS.at(vectorLocation) = game->updateTime->GetUpdateTime();
 
     if (vectorLocation != 99) {
         vectorLocation++;
@@ -139,9 +139,9 @@ void Gui_Top_Menu::UPSWindow() {
     float averageValueFloat = averageValue / ((float) RecentUPS.size());
 
     string UPSString = "UPS Ave: " + to_string(1e9 / averageValueFloat) + ". Updates happen in: " +
-                       to_string(game.updateTime->GetActualUpdateTime()) + "ns";
-    string UPSString2 = "UPS: " + to_string(1e9 / game.updateTime->GetUpdateTime()) + ". Updates happen in: " +
-                        to_string(game.updateTime->GetActualUpdateTime()) + "ns";
+                       to_string(game->updateTime->GetActualUpdateTime()) + "ns";
+    string UPSString2 = "UPS: " + to_string(1e9 / game->updateTime->GetUpdateTime()) + ". Updates happen in: " +
+                        to_string(game->updateTime->GetActualUpdateTime()) + "ns";
 
 
     //Normally for UPS, it'd update time/second, but this only works this way (as this is the time for one update to happen).

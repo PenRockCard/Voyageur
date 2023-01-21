@@ -18,7 +18,7 @@ class Gui_Top_Menu {
     bool show_Custom_UPS_Window = false;
     vector<long long> RecentUPS;
     short vectorLocation = 0;
-    MainGame game;
+    MainGame *game;
 
     void UPSWindow();
 
