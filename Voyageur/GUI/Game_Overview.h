@@ -15,7 +15,7 @@
 static int ResourceSortOrder;
 
 class Game_Overview {
-    MainGame game;
+    MainGame *game;
 protected:
     bool show_planet_window = false;
 public:

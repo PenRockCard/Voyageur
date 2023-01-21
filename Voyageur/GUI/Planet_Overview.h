@@ -11,7 +11,7 @@
 #include "Game_Overview.h"
 
 class Planet_Overview: public Game_Overview {
-    MainGame game;
+    MainGame *game;
     bool show_planet_overview_window = false;
 
 public:

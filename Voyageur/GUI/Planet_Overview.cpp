@@ -6,7 +6,7 @@ using namespace ImGui;
 Planet_Overview::Planet_Overview(MainGame &gameConstruct) : Game_Overview(gameConstruct) {
 //    ResourceSortOrder = 0;
     show_planet_overview_window = false;
-    game = gameConstruct;
+    game = &gameConstruct;
 }
 
 bool Planet_Overview::Planet_Window_Main() {
@@ -40,9 +40,9 @@ bool Planet_Overview::Planet_Window_Main() {
         static int selected = 0;
         {
             ImGui::BeginChild("left pane", ImVec2(150, 0), true);
-            for (int i = 0; i < game.planets.size(); i++) {
+            for (int i = 0; i < game->planets.size(); i++) {
                 // FIXME: Good candidate to use ImGuiSelectableFlags_SelectOnNav
-                if (ImGui::Selectable((*game.planets.at(i)->name).c_str(), selected == i))
+                if (ImGui::Selectable((*game->planets.at(i)->name).c_str(), selected == i))
                     selected = i;
             }
             ImGui::EndChild();
@@ -54,7 +54,7 @@ bool Planet_Overview::Planet_Window_Main() {
             ImGui::BeginGroup();
             ImGui::BeginChild("item view",
                               ImVec2(0, -ImGui::GetFrameHeightWithSpacing())); // Leave room for 1 line below us
-            ImGui::Text((*game.planets.at(selected)->name).c_str(), selected);
+            ImGui::Text((*game->planets.at(selected)->name).c_str(), selected);
             ImGui::Separator();
             if (ImGui::BeginTabBar("##Tabs", ImGuiTabBarFlags_None)) {
                 if (ImGui::BeginTabItem("Description")) {
@@ -72,21 +72,21 @@ bool Planet_Overview::Planet_Window_Main() {
                     if (ImGui::BeginTable("MineralTable", 3, flags)) {
 
                         for (size_t row = 0;
-                             row < game.planets.at(selected)->GetCurrentResources(ResourceSortOrder).size(); row++) {
+                             row < game->planets.at(selected)->GetCurrentResources(ResourceSortOrder).size(); row++) {
                             ImGui::TableNextRow();
                             for (int column = 0; column < 3; column++) {
                                 ImGui::TableSetColumnIndex(column);
                                 if (column == 0) {
                                     ImGui::Text("%s",
-                                                (game.planets.at(selected)->GetCurrentResources(ResourceSortOrder).at(
+                                                (game->planets.at(selected)->GetCurrentResources(ResourceSortOrder).at(
                                                         row)->GetName()).c_str());
                                 } else if (column == 1) {
                                     ImGui::Text(
-                                            "%s", to_string(game.planets.at(selected)->GetCurrentResources(
+                                            "%s", to_string(game->planets.at(selected)->GetCurrentResources(
                                                     ResourceSortOrder).at(row)->GetAmount()).c_str());
                                 } else if (column == 2) {
                                     ImGui::Text(
-                                            "%s", to_string(game.planets.at(selected)->GetCurrentResources(
+                                            "%s", to_string(game->planets.at(selected)->GetCurrentResources(
                                                     ResourceSortOrder).at(row)->GetHardness()).c_str());
                                 }
                             }
@@ -98,8 +98,8 @@ bool Planet_Overview::Planet_Window_Main() {
 
                 if (ImGui::BeginTabItem("People")) {
 
-                    vector<Person> peopleList = game.planets.at(selected)->GetPeople();
-                    for (size_t row = 0; row < game.planets.at(selected)->GetPeople().size(); row++) {
+                    vector<Person> peopleList = game->planets.at(selected)->GetPeople();
+                    for (size_t row = 0; row < game->planets.at(selected)->GetPeople().size(); row++) {
 
                         /**
                          * This part is more a temporary solution to show off how right clicking something to bring up a pop up would work
@@ -120,6 +120,10 @@ bool Planet_Overview::Planet_Window_Main() {
                             ImGui::Text(to_string(peopleList.at(row).GetID()).c_str());
                             if (ImGui::Button("Close"))
                                 ImGui::CloseCurrentPopup();
+                            if (ImGui::Button("Delete Person")) {
+                                game->people.DeletePerson(peopleList.at(row).GetID());
+                                ImGui::CloseCurrentPopup();
+                            }
                             ImGui::EndPopup();
                         }
                     }
@@ -136,21 +140,21 @@ bool Planet_Overview::Planet_Window_Main() {
                     if (ImGui::BeginTable("StoredMineralTable", 3, flags)) {
 
                         for (size_t row = 0;
-                             row < game.planets.at(selected)->GetStoredResources(ResourceSortOrder).size(); row++) {
+                             row < game->planets.at(selected)->GetStoredResources(ResourceSortOrder).size(); row++) {
                             ImGui::TableNextRow();
                             for (int column = 0; column < 3; column++) {
                                 ImGui::TableSetColumnIndex(column);
                                 if (column == 0) {
                                     ImGui::Text("%s",
-                                                (game.planets.at(selected)->GetStoredResources(ResourceSortOrder).at(
+                                                (game->planets.at(selected)->GetStoredResources(ResourceSortOrder).at(
                                                         row)->GetName()).c_str());
                                 } else if (column == 1) {
                                     ImGui::Text(
-                                            "%s", to_string(game.planets.at(selected)->GetStoredResources(
+                                            "%s", to_string(game->planets.at(selected)->GetStoredResources(
                                                     ResourceSortOrder).at(row)->GetAmount()).c_str());
                                 } else if (column == 2) {
                                     ImGui::Text(
-                                            "%s", to_string(game.planets.at(selected)->GetStoredResources(
+                                            "%s", to_string(game->planets.at(selected)->GetStoredResources(
                                                     ResourceSortOrder).at(row)->GetHardness()).c_str());
                                 }
                             }

@@ -21,6 +21,10 @@ public:
     People();
 
     vector<Person> getPeoplePlanet(unsigned long long int planetID);
+
+    bool DeletePerson(unsigned long long int personID);
+
+    unsigned long long int findPersonID(unsigned long long int personID);
 };
 
 

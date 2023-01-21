@@ -33,3 +33,31 @@ vector<Person> People::getPeoplePlanet(unsigned long long planetID) {
     }
     return returnList;
 }
+
+bool People::DeletePerson(unsigned long long personID) {
+    unsigned long long location=findPersonID(personID);
+//    if (location==NULL) {
+//        return false;
+//    }
+    peopleList.erase(peopleList.begin()+location);
+    cout << "Deleted Person ID: " << personID<< endl;
+    return true;
+}
+
+/**
+ * Returns the location of the person in the vector based on their ID.
+ * @param personID
+ * @return Person location in vector. If they aren't found, it returns null.
+ */
+unsigned long long People::findPersonID(unsigned long long personID) {
+
+    unsigned long long location = 0;
+    for (Person* elem:peopleList) {
+        if (elem->GetID()==personID) {
+            return location;
+        }
+        location++;
+    }
+    return NULL;
+}
+
