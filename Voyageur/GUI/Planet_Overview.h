@@ -10,13 +10,28 @@
 #include "../Constants.h"
 #include "Game_Overview.h"
 
-class Planet_Overview: public Game_Overview {
+/**
+ * A class for the GUI of the planet overview window. Inherits from the Game Overview class so that it can keep it's constants while open.
+ */
+class Planet_Overview : public Game_Overview {
     MainGame *game;
-    bool show_planet_overview_window = false;
+    bool showPlanetOverviewWindow = false;
 
 public:
     Planet_Overview(MainGame &gameConstruct);
 
-    bool Planet_Window_Main();
+    bool StoredResourcesTab();
+
+    bool PeopleTab();
+
+    bool MineralsTab();
+
+    bool PlanetWindowMain();
+
+    bool MenuBar();
+
+    bool LeftPane();
+
+    bool RightPane();
 };
 

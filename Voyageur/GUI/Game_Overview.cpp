@@ -10,6 +10,7 @@ Game_Overview::Game_Overview(MainGame &gameConstruct) {
     game = &gameConstruct;
 
     ResourceSortOrder = 0;
+    planetSelected = 0;
 
 }
 
@@ -35,6 +36,6 @@ void Game_Overview::CreateOverviewWindow() {
     //If the checkbox is checked, the show planet window will be shown.
     if (show_planet_window) {
         Planet_Overview planetOverview = Planet_Overview(*game);
-        show_planet_window=planetOverview.Planet_Window_Main();
+        show_planet_window=planetOverview.PlanetWindowMain();
     }
 }

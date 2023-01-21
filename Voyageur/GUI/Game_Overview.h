@@ -13,6 +13,7 @@
 #include "../Game/MainGame.h"
 
 static int ResourceSortOrder;
+static int planetSelected;
 
 class Game_Overview {
     MainGame *game;
