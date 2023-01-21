@@ -13,12 +13,12 @@
 /**
  * A class for the GUI of the planet overview window. Inherits from the Game Overview class so that it can keep it's constants while open.
  */
-class Planet_Overview : public Game_Overview {
+class PlanetOverview : public Game_Overview {
     MainGame *game;
     bool showPlanetOverviewWindow = false;
 
 public:
-    Planet_Overview(MainGame &gameConstruct);
+    PlanetOverview(MainGame &gameConstruct);
 
     bool StoredResourcesTab();
 

@@ -1,5 +1,5 @@
 #include "Game_Overview.h"
-#include "Planet_Overview.h"
+#include "PlanetOverview.h"
 
 using namespace std;
 using namespace ImGui;
@@ -35,7 +35,7 @@ void Game_Overview::CreateOverviewWindow() {
 
     //If the checkbox is checked, the show planet window will be shown.
     if (show_planet_window) {
-        Planet_Overview planetOverview = Planet_Overview(*game);
+        PlanetOverview planetOverview = PlanetOverview(*game);
         show_planet_window=planetOverview.PlanetWindowMain();
     }
 }

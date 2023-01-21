@@ -1,9 +1,9 @@
-#include "Planet_Overview.h"
+#include "PlanetOverview.h"
 
 using namespace std;
 using namespace ImGui;
 
-Planet_Overview::Planet_Overview(MainGame &gameConstruct) : Game_Overview(gameConstruct) {
+PlanetOverview::PlanetOverview(MainGame &gameConstruct) : Game_Overview(gameConstruct) {
     showPlanetOverviewWindow = false;
     game = &gameConstruct;
 }
@@ -12,7 +12,7 @@ Planet_Overview::Planet_Overview(MainGame &gameConstruct) : Game_Overview(gameCo
  * The main part of the class to show the planet window
  * @return If false when closed, stays true otherwise.
  */
-bool Planet_Overview::PlanetWindowMain() {
+bool PlanetOverview::PlanetWindowMain() {
 
     showPlanetOverviewWindow = true;
     if (showPlanetOverviewWindow) {
@@ -44,7 +44,7 @@ bool Planet_Overview::PlanetWindowMain() {
  * The stored resources tab within the planet overview window
  * @return If it was successfully made. Not currently used
  */
-bool Planet_Overview::StoredResourcesTab() {
+bool PlanetOverview::StoredResourcesTab() {
     if (ImGui::BeginTabItem("Stored Resources")) {
 
         static ImGuiTableFlags flags = ImGuiTableFlags_SizingStretchSame | ImGuiTableFlags_Resizable |
@@ -87,7 +87,7 @@ bool Planet_Overview::StoredResourcesTab() {
  * The people tab within the planet overview window
  * @return If it was successfully made. Not currently used
  */
-bool Planet_Overview::PeopleTab() {
+bool PlanetOverview::PeopleTab() {
 
     if (ImGui::BeginTabItem("People")) {
 
@@ -133,7 +133,7 @@ bool Planet_Overview::PeopleTab() {
  * The mineral overview tab within the planet overview window
  * @return If it was successfully made. Not currently used
  */
-bool Planet_Overview::MineralsTab() {
+bool PlanetOverview::MineralsTab() {
     if (ImGui::BeginTabItem("Minerals")) {
         //table
         static ImGuiTableFlags flags = ImGuiTableFlags_SizingStretchSame | ImGuiTableFlags_Resizable |
@@ -175,7 +175,7 @@ bool Planet_Overview::MineralsTab() {
  * The top menu of the planet overview window
  * @return Returns if it was successfully created.
  */
-bool Planet_Overview::MenuBar() {
+bool PlanetOverview::MenuBar() {
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("Resource Sort Order")) {
             if (ImGui::MenuItem("None", NULL, (ResourceSortOrder == RESOURCE_ORDER_NONE))) {
@@ -201,7 +201,7 @@ bool Planet_Overview::MenuBar() {
  * The left pane of the planet view window, shows the planets
  * @return if it was successfully built. TODO: Implement.
  */
-bool Planet_Overview::LeftPane() {
+bool PlanetOverview::LeftPane() {
     //The co-ords below represent the size of that part of the window. If they're 0, it just means go as big as needed.
     //The y co-ord here basically says to set it to the window size-10, allowing the close button to be visible without scrolling at the bottom.
     ImGui::BeginChild("Left Pane Planet Window", ImVec2(150, -ImGui::GetFrameHeightWithSpacing() - 10), true);
@@ -219,7 +219,7 @@ bool Planet_Overview::LeftPane() {
  * The right pane of the planet view window, shows info about the planets
  * @return if it was successfully built. TODO: Implement.
  */
-bool Planet_Overview::RightPane() {
+bool PlanetOverview::RightPane() {
     ImGui::BeginGroup();
     //The following line was added in GUI Example
     ImGui::BeginChild("Right Pane Planet Window",
