@@ -11,26 +11,31 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
 
     people = peopleConstructor;
 
-    int numberResources = 20;
+    //Variables to quickly adjust resources for testing purposes.
+    int numberResources = 10;
+    int resourceAmount = 10;
     for (int i = 0; i < numberResources; i++) {
 
         int nextResource = rand() % resourceTemplates.size();
 
+        //Checks if it's already on the planet.
+        //If so, it just adds more to the planet, otherwise it adds it to the hashtable and creates a whole new resource
         if (resourceLocationTable.find(resourceTemplates.at(nextResource)->getID()) != resourceLocationTable.end()) {
             auto resourceLocation = resourceLocationTable.at(resourceTemplates.at(nextResource)->getID());
-            mineableResources[resourceLocation]->updateAmount((rand() % 1000));
+            mineableResources[resourceLocation]->updateAmount((rand() % resourceAmount));
         } else {
             //creates a new resource, and adds it to the minerals vector for the planet
-            mineableResources.push_back(new Resource(resourceTemplates.at(nextResource)->getHardness(), (rand() % 1000),
-                                                     resourceTemplates.at(nextResource)->getName(),
-                                                     resourceTemplates.at(nextResource)->getID()));
+            mineableResources.push_back(
+                    new Resource(resourceTemplates.at(nextResource)->getHardness(), (rand() % resourceAmount),
+                                 resourceTemplates.at(nextResource)->getName(),
+                                 resourceTemplates.at(nextResource)->getID()));
             //adds it to the hashtable
             resourceLocationTable[resourceTemplates.at(nextResource)->getID()] = mineableResources.size() - 1;
             //adds the currently stored resources on a planet, at the same location as the minerals vector
             //This allows for it to be easily found based on the hashtable above.
             storedResources.push_back(new Resource(resourceTemplates.at(nextResource)->getHardness(), 0,
                                                    resourceTemplates.at(nextResource)->getName(),
-                                                   resourceTemplates.at(nextResource)->getID()));
+                                                   resourceTemplates.at(nextResource)->getID(), true));
         }
     }
 

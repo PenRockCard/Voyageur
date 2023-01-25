@@ -10,6 +10,7 @@ class Resource {
     float *hardness = new float;
     float *amount = new float;
     int *templateID = new int;
+    bool *infinite = new bool;
 
 public:
 
@@ -19,7 +20,8 @@ public:
 
     float GetAmount();
 
-    Resource(float hardnessConstructor, float amountConstructor, string nameConstructor, int templateIDConstructor);
+    Resource(float hardnessConstructor, float amountConstructor, string nameConstructor, int templateIDConstructor,
+             bool infiniteConstructor = false);
 
     //Resource();
     float mineResource();
