@@ -1,11 +1,12 @@
+#pragma once
 #include <algorithm>
 #include "Planet.h"
 
 //Constructor.
-//To be made more programatic later.
+//To be made more programmatic later.
 
 Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
-               vector<ResourceTemplate *> resourceTemplates) {
+                   vector<ResourceTemplate *> resourceTemplates, double orbitLong, double orbitShort, int orbitPoints) {
 
     ID = planetIDConstructor;
 
@@ -45,6 +46,8 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
         people->AddPerson(planetIDConstructor);
     }
 
+    //Sets up the planets orbit
+    planetOrbit = new EllipseFunction(orbitLong, orbitShort,orbitPoints);
 }
 
 void Planet::mineResources() {

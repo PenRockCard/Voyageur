@@ -6,8 +6,8 @@ MainGame::MainGame() {
     nextResourceID = 0;
     GetResourceTemplates();
     people = People();
-    planets.push_back(new Planet("Neptune", &people, nextPlanetID++, resourceTemplates));
-    planets.push_back(new Planet("Mars", &people, nextPlanetID++, resourceTemplates));
+    planets.push_back(new Planet("Neptune", &people, nextPlanetID++, resourceTemplates, 4.54 * 1000000000, 4.46 * 1000000000, /** Multiplier is for billion */ 360));
+    planets.push_back(new Planet("Uranus", &people, nextPlanetID++, resourceTemplates, 3.00639 * 1000000000, 2.73556 * 1000000000, 360));
     updateTime = new UpdateTime();
 }
 

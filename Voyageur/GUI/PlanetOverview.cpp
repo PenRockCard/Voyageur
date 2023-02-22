@@ -4,8 +4,8 @@ using namespace std;
 using namespace ImGui;
 
 PlanetOverview::PlanetOverview(MainGame &gameConstruct) : Game_Overview(gameConstruct) {
-    showPlanetOverviewWindow = false;
-    game = &gameConstruct;
+        showPlanetOverviewWindow = false;
+        game = &gameConstruct;
 }
 
 /**

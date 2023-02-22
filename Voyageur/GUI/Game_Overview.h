@@ -19,6 +19,7 @@ class Game_Overview {
     MainGame *game;
 protected:
     bool show_planet_window = false;
+    bool showSolarSystem = false;
 public:
     Game_Overview(MainGame &gameConstruct);
 

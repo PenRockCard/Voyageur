@@ -1,4 +1,6 @@
 #include "Game_Overview.h"
+//TODO: See if it's possible to move these 2 includes to the .h file
+#include "SystemWindow.h"
 #include "PlanetOverview.h"
 
 using namespace std;
@@ -7,6 +9,7 @@ using namespace ImGui;
 Game_Overview::Game_Overview(MainGame &gameConstruct) {
 
     show_planet_window = false;
+    showSolarSystem = false;
     game = &gameConstruct;
 
     ResourceSortOrder = 0;
@@ -30,12 +33,17 @@ void Game_Overview::CreateOverviewWindow() {
 
     //Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
     Checkbox("Planet Info Window", &show_planet_window);
-
+    Checkbox("Solar System Overview", &showSolarSystem);
     End();
 
     //If the checkbox is checked, the show planet window will be shown.
     if (show_planet_window) {
         PlanetOverview planetOverview = PlanetOverview(*game);
         show_planet_window=planetOverview.PlanetWindowMain();
+    }
+
+    if (showSolarSystem) {
+        SystemWindow systemWindow = SystemWindow(*game);
+        showSolarSystem = systemWindow.ShowWindow();
     }
 }

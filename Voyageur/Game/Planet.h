@@ -8,8 +8,7 @@
 #include "ResourceTemplate.h"
 #include <unordered_map>
 #include "../Constants.h"
-
-using namespace std;
+#include "../Resources/EllipseFunction.h"
 
 class Planet {
 
@@ -18,6 +17,7 @@ class Planet {
     vector<Resource *> mineableResources;
     vector<Resource *> storedResources;
     unordered_map<int, int> resourceLocationTable;
+
 
     static bool compareResourceAmount(Resource r1, Resource r2);
 
@@ -28,6 +28,8 @@ class Planet {
 
 public:
 
+    EllipseFunction *planetOrbit;
+
     int *temperature = new int;
 
     void mineResources();
@@ -37,7 +39,7 @@ public:
     string *name = new string;
 
     Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
-           vector<ResourceTemplate *> resourceTemplates);
+           vector<ResourceTemplate *> resourceTemplates, double OrbitLong, double OrbitShort, int orbitPoints);
 
     vector<Person> GetPeople();
 
@@ -45,4 +47,5 @@ public:
 
     vector<Resource *> GetStoredResources(int order);
 };
+
 

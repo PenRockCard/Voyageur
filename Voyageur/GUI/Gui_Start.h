@@ -9,8 +9,9 @@
 #include <dxgi1_4.h>
 #include <tchar.h>
 #include "../Game/MainGame.h"
-#include "Gui_Top_Menu.h";
-#include "Game_Overview.h";
+#include "Gui_Top_Menu.h"
+#include "Game_Overview.h"
+#include "../implot/implot.h"
 
 int main_window_start(MainGame &game);
 
