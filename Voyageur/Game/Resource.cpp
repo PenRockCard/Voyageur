@@ -31,11 +31,14 @@ float Resource::mineResource() {
     //Needs to be cast as a float to multiply as a float correctly.
     *this->amount = *amount - (float(1 / (200 * *hardness)));
 
-    //Having a cout here speeds up the whole program, no idea why.
-    //TODO: Figure out why.
-//    cout << amtAfter;
+
 
     auto amtAfter = *this->amount;
+
+    /*Having a cout here speeds up the whole program, no idea why.
+    TODO: Figure out why. Doesn't seem to work anymore */
+    //cout << amtAfter <<endl;
+
     //If the amount would go below 0, this ensures it won't
     //TODO: This doesn't quite return the right amount.
     //More info: The stored resources amount is slightly different than the amount a resource began with when fully depleted.
