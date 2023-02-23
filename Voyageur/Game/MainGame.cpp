@@ -6,8 +6,17 @@ MainGame::MainGame() {
     nextResourceID = 0;
     GetResourceTemplates();
     people = People();
-    planets.push_back(new Planet("Neptune", &people, nextPlanetID++, resourceTemplates, 4.54 * 1000000000, 4.46 * 1000000000, /** Multiplier is for billion */ 360));
-    planets.push_back(new Planet("Uranus", &people, nextPlanetID++, resourceTemplates, 3.00639 * 1000000000, 2.73556 * 1000000000, 360));
+    //TODO: Add sun distance and angle offset to parameters
+    planets.push_back(new Planet("Mercury", &people, nextPlanetID++, resourceTemplates, 0.466697*AU, 0.307499*AU, 360));
+    planets.push_back(new Planet("Venus", &people, nextPlanetID++, resourceTemplates, 0.728213 * AU, 0.718440 * AU, 360));
+    planets.push_back(new Planet("Earth", &people, nextPlanetID++, resourceTemplates, 152097597, 147098450, 360));
+    planets.push_back(new Planet("Mars", &people, nextPlanetID++, resourceTemplates, 1.66621*AU, 1.3814*AU, 360));
+    planets.push_back(new Planet("Jupiter", &people, nextPlanetID++, resourceTemplates, 5.4570*AU, 4.9506*AU, 360));
+    planets.push_back(new Planet("Saturn", &people, nextPlanetID++, resourceTemplates, 10.1238*AU,9.0412*AU, 360));
+    planets.push_back(new Planet("Uranus", &people, nextPlanetID++, resourceTemplates, 20.0965*AU,18.2861*AU, 360));
+    planets.push_back(new Planet("Neptune", &people, nextPlanetID++, resourceTemplates, 30.33*AU,29.81*AU,  360));
+    planets.push_back(new Planet("Pluto", &people, nextPlanetID++, resourceTemplates, 49.305*AU,29.658*AU,  360));
+
     updateTime = new UpdateTime();
 }
 
