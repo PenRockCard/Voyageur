@@ -11,9 +11,6 @@ int main_window_start(MainGame &game) {
     WNDCLASSEXW wc = {sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
                       L"Voyageur", NULL};
     ::RegisterClassExW(&wc);
-
-//    LPCTSTR temp = L"Temp";
-
     HWND hwnd = ::CreateWindowW(wc.lpszClassName, reinterpret_cast<LPCWSTR>("Voyageur"), WS_OVERLAPPEDWINDOW, 100, 100, 1280,
                                 800, NULL, NULL, wc.hInstance, NULL);
 
