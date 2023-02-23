@@ -9,9 +9,12 @@ int main_window_start(MainGame &game) {
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
     WNDCLASSEXW wc = {sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-                      L"ImGui Example", NULL};
+                      L"Voyageur", NULL};
     ::RegisterClassExW(&wc);
-    HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Dear ImGui DirectX11 Example", WS_OVERLAPPEDWINDOW, 100, 100, 1280,
+
+//    LPCTSTR temp = L"Temp";
+
+    HWND hwnd = ::CreateWindowW(wc.lpszClassName, reinterpret_cast<LPCWSTR>("Voyageur"), WS_OVERLAPPEDWINDOW, 100, 100, 1280,
                                 800, NULL, NULL, wc.hInstance, NULL);
 
     // Initialize Direct3D
