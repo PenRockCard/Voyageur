@@ -13,39 +13,25 @@ bool showDemo = false;
 void GUI_Start();
 void Main_Update();
 MainGame* game = new MainGame();
+int endGame = -1;
 
-int main()
-{
-    if (showDemo) {
-        cout << "Ahahaha, there's no demo\n";
-        return 0;
-    }
-
-    //initial window
-
-    //main_window_start(*game);
-
-    //main_window_start();
+int main() {
     //Main loop, temp. Move to MainGame.cpp maybe?
     thread threadUpdate(Main_Update);
     thread threadGUI(GUI_Start);
 
-
     threadUpdate.join();
     threadGUI.join();
-
-
-    int x = 5;
 
     return 0;
 }
 
 void GUI_Start() {
-    main_window_start(*game);
+    endGame = main_window_start(*game);
 }
 
 void Main_Update() {
-    while (true) {
+    while (endGame==-1) {
         game->Update();
     }
 }
