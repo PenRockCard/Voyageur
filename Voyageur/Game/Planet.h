@@ -39,7 +39,7 @@ public:
     string *name = new string;
 
     Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
-           vector<ResourceTemplate *> resourceTemplates, double OrbitLong, double OrbitShort, int orbitPoints);
+           vector<ResourceTemplate *> resourceTemplates, double OrbitLong, double OrbitShort, int orbitPoints, double orbitOffSetX = 0, double orbitOffSetY = 0, double orbitAngle = 0);
 
     vector<Person> GetPeople();
 

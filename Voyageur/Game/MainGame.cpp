@@ -15,7 +15,7 @@ MainGame::MainGame() {
     planets.push_back(new Planet("Saturn", &people, nextPlanetID++, resourceTemplates, 10.1238*AU,9.0412*AU, 360));
     planets.push_back(new Planet("Uranus", &people, nextPlanetID++, resourceTemplates, 20.0965*AU,18.2861*AU, 360));
     planets.push_back(new Planet("Neptune", &people, nextPlanetID++, resourceTemplates, 30.33*AU,29.81*AU,  360));
-    planets.push_back(new Planet("Pluto", &people, nextPlanetID++, resourceTemplates, 49.305*AU,29.658*AU,  360));
+    planets.push_back(new Planet("Pluto", &people, nextPlanetID++, resourceTemplates, 49.305*AU,29.658*AU,  360, 0.1*1000000000,0.5*1000000000, 315));
 
     updateTime = new UpdateTime();
 }

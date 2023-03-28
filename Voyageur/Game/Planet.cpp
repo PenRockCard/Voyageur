@@ -6,7 +6,7 @@
 //To be made more programmatic later.
 
 Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
-                   vector<ResourceTemplate *> resourceTemplates, double orbitLong, double orbitShort, int orbitPoints) {
+                   vector<ResourceTemplate *> resourceTemplates, double orbitLong, double orbitShort, int orbitPoints, double orbitOffSetX, double orbitOffSetY, double orbitAngle) {
 
     ID = planetIDConstructor;
 
@@ -47,7 +47,7 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
     }
 
     //Sets up the planets orbit
-    planetOrbit = new EllipseFunction(orbitLong, orbitShort,orbitPoints);
+    planetOrbit = new EllipseFunction(orbitLong, orbitShort,orbitPoints,orbitOffSetX,orbitOffSetY,orbitAngle);
 }
 
 void Planet::mineResources() {
