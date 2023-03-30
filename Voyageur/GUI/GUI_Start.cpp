@@ -6,6 +6,12 @@
 
 // Main code
 int main_window_start(MainGame &game) {
+    //Gets the windows current resolution
+    RECT desktop;
+    HWND hDesktop = GetDesktopWindow();
+    GetWindowRect(hDesktop, &desktop);
+    //length/horizontal: desktop.right; height/vertical: desktop.bottom;
+
     // Create application window
     ImGui_ImplWin32_EnableDpiAwareness(); //Disable if not using windows 8/10 (and probably 11)
     WNDCLASSEXW wc = {sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
@@ -13,7 +19,7 @@ int main_window_start(MainGame &game) {
     ::RegisterClassExW(&wc);
     //The reinterpret_cast<LPCWSTR>("Voyageur") is needed to get the whole title to appear in the top bar.
     //Can't figure out a way to get it start "properly" maximized, the button is never set to it
-    HWND hwnd = ::CreateWindowW(wc.lpszClassName, reinterpret_cast<LPCWSTR>("Voyageur"), WS_MAXIMIZE | WS_OVERLAPPEDWINDOW | WS_MAXIMIZEBOX, CW_USEDEFAULT, CW_USEDEFAULT, 1920, 1080, NULL, NULL, wc.hInstance, NULL);
+    HWND hwnd = ::CreateWindowW(wc.lpszClassName, reinterpret_cast<LPCWSTR>("Voyageur"), WS_MAXIMIZE | WS_OVERLAPPEDWINDOW | WS_MAXIMIZEBOX, CW_USEDEFAULT, CW_USEDEFAULT, desktop.right, desktop.bottom, NULL, NULL, wc.hInstance, NULL);
 
     // Initialize Direct3D
     if (!CreateDeviceD3D(hwnd)) {
