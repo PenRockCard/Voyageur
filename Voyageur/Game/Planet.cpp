@@ -15,19 +15,21 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
     //Variables to quickly adjust resources for testing purposes.
     int numberResources = 10;
     int resourceAmount = 10;
+    random_device rd;   // non-deterministic generator
+    mt19937 gen(rd());  // to seed mersenne twister.
+    uniform_int_distribution<> distNextResource(0,resourceTemplates.size()-1); // distribute results between the min/max
+    uniform_real_distribution<> resourceAmountDistribution(0,resourceAmount);
     for (int i = 0; i < numberResources; i++) {
-
-        int nextResource = rand() % resourceTemplates.size();
-
+        int nextResource =  distNextResource(gen);
         //Checks if it's already on the planet.
         //If so, it just adds more to the planet, otherwise it adds it to the hashtable and creates a whole new resource
         if (resourceLocationTable.find(resourceTemplates.at(nextResource)->getID()) != resourceLocationTable.end()) {
             auto resourceLocation = resourceLocationTable.at(resourceTemplates.at(nextResource)->getID());
-            mineableResources[resourceLocation]->updateAmount((rand() % resourceAmount));
+            mineableResources[resourceLocation]->updateAmount(resourceAmountDistribution(gen));
         } else {
             //creates a new resource, and adds it to the minerals vector for the planet
             mineableResources.push_back(
-                    new Resource(resourceTemplates.at(nextResource)->getHardness(), (rand() % resourceAmount),
+                    new Resource(resourceTemplates.at(nextResource)->getHardness(), resourceAmountDistribution(gen),
                                  resourceTemplates.at(nextResource)->getName(),
                                  resourceTemplates.at(nextResource)->getID()));
             //adds it to the hashtable
