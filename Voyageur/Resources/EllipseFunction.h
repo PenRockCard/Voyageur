@@ -18,10 +18,6 @@ class EllipseFunction {
 
     /** The number of points the ellipse has*/
     int numberPoints;
-    /** The a value for the ellipse (the long side) */
-    double a;
-    /** The b value for the ellipse (the short side) */
-    double b;
     /** How far offset the ellipse is from the origin (x) */
     double offsetX;
     /** How far offset the ellipse is from the origin (y) */
@@ -40,6 +36,12 @@ public:
     double *GetYArray();
 
     int GetNumberPoints();
+
+    //These are public because they're used elsewhere. Consider moving them to a getter.
+    /** The a value for the ellipse (the long side) */
+    double a;
+    /** The b value for the ellipse (the short side) */
+    double b;
 
 };
 

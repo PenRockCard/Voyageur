@@ -1,4 +1,5 @@
 #pragma once
+
 #include <algorithm>
 #include "Planet.h"
 
@@ -6,7 +7,9 @@
 //To be made more programmatic later.
 
 Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
-                   vector<ResourceTemplate *> resourceTemplates, double orbitLong, double orbitShort, int orbitPoints, double orbitOffSetX, double orbitOffSetY, double orbitAngle) {
+               vector<ResourceTemplate *> resourceTemplates, double orbitLong, double orbitShort, int orbitPoints,
+               int orbitalCharacteristicPoints, double planetMass, double orbitOffSetX, double orbitOffSetY,
+               double orbitAngle) {
 
     ID = planetIDConstructor;
 
@@ -17,10 +20,11 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
     int resourceAmount = 10;
     random_device rd;   // non-deterministic generator
     mt19937 gen(rd());  // to seed mersenne twister.
-    uniform_int_distribution<> distNextResource(0,resourceTemplates.size()-1); // distribute results between the min/max
-    uniform_real_distribution<> resourceAmountDistribution(0,resourceAmount);
+    uniform_int_distribution<> distNextResource(0,
+                                                resourceTemplates.size() - 1); // distribute results between the min/max
+    uniform_real_distribution<> resourceAmountDistribution(0, resourceAmount);
     for (int i = 0; i < numberResources; i++) {
-        int nextResource =  distNextResource(gen);
+        int nextResource = distNextResource(gen);
         //Checks if it's already on the planet.
         //If so, it just adds more to the planet, otherwise it adds it to the hashtable and creates a whole new resource
         if (resourceLocationTable.find(resourceTemplates.at(nextResource)->getID()) != resourceLocationTable.end()) {
@@ -49,7 +53,45 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
     }
 
     //Sets up the planets orbit
-    planetOrbit = new EllipseFunction(orbitLong, orbitShort,orbitPoints,orbitOffSetX,orbitOffSetY,orbitAngle);
+    planetOrbit = new EllipseFunction(orbitLong, orbitShort, orbitPoints, orbitOffSetX, orbitOffSetY, orbitAngle);
+
+    //Sets up the orbitalCharacteristics vector with a loop from 0 to 2*pi
+    double angleIncrement = (2 * numbers::pi) / orbitalCharacteristicPoints;
+    //Will need to add case for when a planet isn't orbiting the sun.
+    //Standard gravitational parameter: https://en.wikipedia.org/wiki/Standard_gravitational_parameter
+    double mu = (planetMass + SUN_MASS) * //Planet mass is in kg
+                GRAVITATIONAL_CONSTANT; //Gravitational constant is in m^3/(kg*s^2)
+    //Edge case for the last point? Should it be (< ... - angleIncrement) ?
+    int i = 0;
+
+    for (double angle = 0; angle < (2 * numbers::pi - angleIncrement); angle += angleIncrement) {
+        PlanetOrbitalCharacteristics currentOrbitalPoint;
+        currentOrbitalPoint.angle = angle;
+
+        //For speed, the distance from the center (r), mu (from above), and a (from the ellipse equation) are needed.
+        //Distance from center/the sun is based on the angle in polar co-ordinates
+        //Based on the first equation (at time of writing) here: https://en.wikipedia.org/wiki/Ellipse#Polar_forms.
+        //Could swap to use e instead of sin and square that result
+        double rDistance = (planetOrbit->a * planetOrbit->b) /
+                           sqrt(pow(planetOrbit->b * cos(angle), 2) + pow(planetOrbit->a * sin(angle), 2));
+        //Instant orbit speed: https://en.wikipedia.org/wiki/Orbital_speed#Instantaneous_orbital_speed
+        double velocity = sqrt(mu * ((2 / rDistance) - (1 / planetOrbit->a))); //Velocity is in m/s
+        currentOrbitalPoint.velocity = velocity;
+
+        //Get time/distance
+        //Get the distance of the previous point (switch to previous addition to vector if not empty?)
+        double r0 = (planetOrbit->a * planetOrbit->b) /
+                    sqrt(pow(planetOrbit->b * cos(angle - angleIncrement), 2) +
+                           pow(planetOrbit->a * sin(angle - angleIncrement), 2));
+        double distance = sqrt(pow(rDistance, 2) + pow(r0, 2) - 2 * r0 * rDistance * (angleIncrement));
+        currentOrbitalPoint.distance = distance; //Distance in m
+
+        int time = (double)distance / velocity;
+        currentOrbitalPoint.time = time; //Time in seconds between points
+
+        orbitalCharacteristics.push_back(currentOrbitalPoint);
+        i++;
+    }
 }
 
 void Planet::mineResources() {
