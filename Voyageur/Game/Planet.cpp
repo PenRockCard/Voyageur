@@ -79,13 +79,17 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
         currentOrbitalPoint.velocity = velocity;
 
         //Get time/distance
-        //Get the distance of the previous point (switch to previous addition to vector if not empty?)
+        //Finds the distance of the previous point, based on the current angle minus the difference
         double r0 = (planetOrbit->a * planetOrbit->b) /
                     sqrt(pow(planetOrbit->b * cos(angle - angleIncrement), 2) +
                            pow(planetOrbit->a * sin(angle - angleIncrement), 2));
-        double distance = sqrt(pow(rDistance, 2) + pow(r0, 2) - 2 * r0 * rDistance * (angleIncrement));
+        //Finds the distance between points using the cosine law
+        double distance = sqrt(pow(rDistance, 2) + pow(r0, 2) - 2 * r0 * rDistance * cos(angleIncrement));
         currentOrbitalPoint.distance = distance; //Distance in m
 
+        /* The time here is not totally accurate, Earth will have 31335714 seconds per year with this calculation,
+         * however, Earth actually has 31536000 seconds per year, so a difference of ~0.635%
+         */
         int time = (double)distance / velocity;
         currentOrbitalPoint.time = time; //Time in seconds between points
 
