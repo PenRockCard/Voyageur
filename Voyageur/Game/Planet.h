@@ -31,6 +31,8 @@ class Planet {
     vector<PlanetOrbitalCharacteristics> orbitalCharacteristics;
     double currentAngle; //Limit of 0-360, either in deg or rad.
     int orbitalCharacteristicsPosition; //Current location the planet is in the orbitalCharacteristics vector. If it's between two points there, it should be in the lower one.
+    long long totalSeconds; //The total orbit time
+    int *timePerTick;
 
     static bool compareResourceAmount(Resource r1, Resource r2);
 
@@ -47,12 +49,14 @@ public:
 
     void mineResources();
 
+    void UpdateLocation();
+
     unsigned long long GetID();
 
     string *name = new string;
 
     Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
-           vector<ResourceTemplate *> resourceTemplates, double OrbitLong, double OrbitShort, int orbitPoints, int orbitalCharacteristicPoints, double planetMass, double orbitOffSetX = 0, double orbitOffSetY = 0, double orbitAngle = 0);
+           vector<ResourceTemplate *> resourceTemplates, double OrbitLong, double OrbitShort, int orbitPoints, int orbitalCharacteristicPoints, double planetMass, int *timePerTickConstructor, double orbitOffSetX = 0, double orbitOffSetY = 0, double orbitAngle = 0);
 
     vector<Person> GetPeople();
 

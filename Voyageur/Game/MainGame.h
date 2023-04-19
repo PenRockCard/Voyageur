@@ -22,6 +22,8 @@ public:
 
     People people;
 
+    int timePerTick; //Number of seconds passed every update/tick.
+
     MainGame();
 
     void Update();

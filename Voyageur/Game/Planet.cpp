@@ -8,9 +8,10 @@
 
 Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long long planetIDConstructor,
                vector<ResourceTemplate *> resourceTemplates, double orbitLong, double orbitShort, int orbitPoints,
-               int orbitalCharacteristicPoints, double planetMass, double orbitOffSetX, double orbitOffSetY,
+               int orbitalCharacteristicPoints, double planetMass, int *timePerTickConstructor, double orbitOffSetX, double orbitOffSetY,
                double orbitAngle) {
 
+    timePerTick=timePerTickConstructor;
     ID = planetIDConstructor;
 
     people = peopleConstructor;
@@ -63,6 +64,7 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
                 GRAVITATIONAL_CONSTANT; //Gravitational constant is in m^3/(kg*s^2)
     //Edge case for the last point? Should it be (< ... - angleIncrement) ?
     int i = 0;
+    totalSeconds=0;
 
     for (double angle = 0; angle < (2 * numbers::pi - angleIncrement); angle += angleIncrement) {
         PlanetOrbitalCharacteristics currentOrbitalPoint;
@@ -92,10 +94,14 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
          */
         int time = (double)distance / velocity;
         currentOrbitalPoint.time = time; //Time in seconds between points
-
+        totalSeconds+=time;
         orbitalCharacteristics.push_back(currentOrbitalPoint);
         i++;
     }
+    totalSeconds+= orbitalCharacteristics[0].time; //Gets the final 2 points, maybe not needed?
+    //The current angle (and therefore position) defaults to 0, that can be fixed
+    currentAngle=0;
+    orbitalCharacteristicPoints=0;
 }
 
 void Planet::mineResources() {
@@ -147,6 +153,10 @@ vector<Resource *> Planet::GetStoredResources(int order = RESOURCE_ORDER_NONE) {
             break;
     }
     return resourcesOrdered;
+}
+
+void Planet::UpdateLocation() {
+
 }
 
 unsigned long long Planet::GetID() {
