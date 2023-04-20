@@ -35,6 +35,7 @@ void MainGame::Update() {
 
     for (Planet *planet: planets) {
         planet->mineResources();
+        planet->UpdateLocation();
     }
 
     updateTime->UpdateFinish();
