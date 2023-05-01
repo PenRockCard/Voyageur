@@ -17,8 +17,9 @@
 struct PlanetOrbitalCharacteristics{
     double angle;
     double velocity;
-    int time;
+    double time;
     double distance;
+    double distanceFromOrbitCenter;
 };
 
 class Planet {
@@ -30,7 +31,7 @@ class Planet {
     unordered_map<int, int> resourceLocationTable;
     vector<PlanetOrbitalCharacteristics> orbitalCharacteristics;
     double currentAngle; //Limit of 0-360, either in deg or rad.
-    int orbitalCharacteristicsPosition; //Current location the planet is in the orbitalCharacteristics vector. If it's between two points there, it should be in the lower one.
+
     long long totalSeconds; //The total orbit time
     int *timePerTick;
 
@@ -42,6 +43,13 @@ class Planet {
 
 
 public:
+
+    double GetCurrentAngle();
+    int GetOrbitalCharacteristicsSize();
+
+    int orbitalCharacteristicsPosition; //Current location the planet is in the orbitalCharacteristics vector. If it's between two points there, it should be in the lower one.
+
+    PlanetOrbitalCharacteristics GetOrbitCharacteristicAt(int position);
 
     EllipseFunction *planetOrbit;
 

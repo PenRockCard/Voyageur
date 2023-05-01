@@ -9,7 +9,8 @@ The default constructor. Sets the minimum update time to 0.1 seconds.
 TODO: Add another constructor to set it based on the time input?
 */
 UpdateTime::UpdateTime() {
-    timePeriod = nanoseconds(100000000);
+    //timePeriod = nanoseconds(100000000);
+    timePeriod = nanoseconds(100000);
 };
 
 /*

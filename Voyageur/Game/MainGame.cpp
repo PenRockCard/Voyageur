@@ -8,10 +8,10 @@ MainGame::MainGame() {
     people = People();
 
     //Temp time
-    timePerTick=10000;
+    timePerTick=1000;
 
     //TODO: Add sun distance and angle offset to parameters
-    int orbitalCharacteristicPoints = 1000;
+    int orbitalCharacteristicPoints = 9999; //Neptune stops working when it's set to 10,000 for some reason.
     //Planet masses are based off of Earth's (from Wikipedia)
     double earthMass = 5972200000000000000000000.0; //Mass in kg. It has to have a .0 at the end to define it as a float/double, too big for an int/long
     planets.push_back(new Planet("Mercury", &people, nextPlanetID++, resourceTemplates, 0.466697*AU, 0.307499*AU, 360, orbitalCharacteristicPoints, earthMass*0.0553, &timePerTick));

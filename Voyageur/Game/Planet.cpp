@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <iomanip>
 #include "Planet.h"
 
 //Constructor.
@@ -77,6 +78,7 @@ Planet::Planet(string nameConstructor, People *peopleConstructor, unsigned long 
         //Could swap to use e instead of sin and square that result
         double rDistance = (planetOrbit->a * planetOrbit->b) /
                            sqrt(pow(planetOrbit->b * cos(angle), 2) + pow(planetOrbit->a * sin(angle), 2));
+        currentOrbitalPoint.distanceFromOrbitCenter = rDistance;
         //Instant orbit speed: https://en.wikipedia.org/wiki/Orbital_speed#Instantaneous_orbital_speed
         double velocity = sqrt(mu * ((2 / rDistance) - (1 / planetOrbit->a))); //Velocity is in m/s
         currentOrbitalPoint.velocity = velocity;
@@ -187,75 +189,70 @@ void Planet::UpdateLocation() {
     double currentTime = (t1 - t2) * (currentAngle - angle2) / (angle1 - angle2) + t2;
     double currentVelocity = (velocity1 - velocity2) * (currentAngle - angle2) / (angle1 - angle2) + velocity2;
     //The distance it starts at before adding the distance it travels over x time.
-    double currentDistance = (distance1) * (1 - ((angle2 - currentAngle) / (angle2 - angle1)));
+    double currentDistance = (distance2) * (1 - ((angle2 - currentAngle) / (angle2 - angle1))); //changed d1 to d2 here
 
-    //The total distance it's travelled
-    double newDistance;
+    double distanceToTravel = *timePerTick * currentVelocity;
 
-    //The difference in distance from the current point/vector.distance point.
-    double diffDistance = distance1 - currentDistance;
+    if (ID>=0) {
+        auto das =5;
+    }
 
-    //The distance it travels over x time starting from distance1.
-    newDistance = *timePerTick * currentVelocity + currentDistance;
-
-    if (newDistance > distance2) {
-        //Updates the current location in the vector. Has the edge case for when it reaches the end.
-        orbitalCharacteristicsPosition++;
-        if (orbitalCharacteristicsPosition >= orbitalCharacteristics.size()) {
-            orbitalCharacteristicsPosition = 0;
+    //Case 1, doesn't pass any points
+    if ((distanceToTravel + currentDistance) <= distance2) {
+        double oldAngle = currentAngle;
+        currentAngle =
+                (angle1 - angle2) * (distanceToTravel + currentDistance) / (distance2) + angle2;
+        //Case for when it goes over a full circle (2 pi)
+        double angleDiff = currentAngle-oldAngle;
+        if (currentAngle >= 2 * numbers::pi) {
+            currentAngle -= numbers::pi;
         }
 
-        /**
-         * If the newDistance > distance3 + distance2
-         *      compare to distance4 + distance3 + distance2
-         *      repeat
-         * when this is no longer true, find diffDistance = newDistance - (distance2 + distance3 + ...)
-         * use diff distance as the i for distanceN and distance(N+1) like above.
-         */
-         //The distance measured from the beginning point of the planet
-        double cumulativeDistance = distance1 - currentDistance;
+        cout << angleDiff << " Id: " << ID << endl;
+    } else {
+        //The 2 orbital characteristic points surrounding the current location
+        int nextOrbitalCharacteristicsPosition3 = (((nextOrbitalCharacteristicsPosition + 1) >=
+                                                    orbitalCharacteristics.size())
+                                                   ? 0 : (nextOrbitalCharacteristicsPosition + 1));
+        int nextOrbitalCharacteristicsPosition2 = nextOrbitalCharacteristicsPosition;
+
+        //The time it takes to get to where it is
+        double currentTime = (distance2 - currentDistance) / currentVelocity;
+        double timeRemaining = *timePerTick - currentTime;
         while (true) {
-            //Ternary to deal with 0 case, like above
-            double nextDistance = orbitalCharacteristics[((orbitalCharacteristicsPosition + 1) >=
-                                                          orbitalCharacteristics.size()) ? 0 : (
-                                                                 orbitalCharacteristicsPosition + 1)].distance;
-            //Checks if it's greater than the next point.
-            if ((cumulativeDistance + nextDistance) < newDistance) {
-                cumulativeDistance += nextDistance;
-                orbitalCharacteristicsPosition++;
-                if (orbitalCharacteristicsPosition >= orbitalCharacteristics.size()) {
-                    orbitalCharacteristicsPosition = 0;
-                }
-            } else {
-                diffDistance = newDistance - cumulativeDistance;
+            //distance2 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition2].distance;
+            velocity2 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition2].velocity;
+
+            double distanceTravelled2 = timeRemaining * velocity2;
+            //Find new distance (distance3)
+            double distance3 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition3].distance;
+            if (distance3 >= distanceTravelled2) {
+                currentDistance = distanceTravelled2;
                 break;
             }
+            nextOrbitalCharacteristicsPosition2 = nextOrbitalCharacteristicsPosition3;
+            nextOrbitalCharacteristicsPosition3 = (((nextOrbitalCharacteristicsPosition3 + 1) >=
+                                                    orbitalCharacteristics.size())
+                                                   ? 0 : (nextOrbitalCharacteristicsPosition3 + 1));
+            //currentVelocity = velocity2;
+            timeRemaining -= distance3 / velocity2;
         }
+        angle1 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition2].angle;
+        angle2 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition3].angle;
 
-        //Updates all the numbers to be the next point
-        nextOrbitalCharacteristicsPosition = (((orbitalCharacteristicsPosition + 1) >= orbitalCharacteristics.size())
-                                              ? 0 : (orbitalCharacteristicsPosition + 1));
-        //Don't need a lot of these variables? TODO: Look into removing
-        t1 = orbitalCharacteristics[orbitalCharacteristicsPosition].time;
-        angle1 = orbitalCharacteristics[orbitalCharacteristicsPosition].angle;
-        velocity1 = orbitalCharacteristics[orbitalCharacteristicsPosition].velocity;
-        distance1 = orbitalCharacteristics[orbitalCharacteristicsPosition].distance;
-        t2 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition].time;
-        angle2 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition].angle;
-        velocity2 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition].velocity;
-        distance2 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition].distance;
-    }
-    //Update the current velocity for next calculation based on the current distance
-    //Finds as a percent where the distance is.
-    double percentComplete = (1 - ((distance1 - diffDistance) / (distance1)));
+        distance1 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition2].distance;
+        distance2 = orbitalCharacteristics[nextOrbitalCharacteristicsPosition3].distance;
+        double oldAngle = currentAngle;
+        currentAngle =
+                (angle1 - angle2) * (currentDistance) / (distance2) + angle2;
+        //Case for when it goes over a full circle (2 pi)
+        double angleDiff = currentAngle-oldAngle;
+        if (currentAngle >= 2 * numbers::pi) {
+            currentAngle -= numbers::pi;
+        }
+        orbitalCharacteristicsPosition= nextOrbitalCharacteristicsPosition2;
 
-    //Case for when it crosses over the 2pi line
-    if (angle2 == 0) {
-        angle2 = 2 * std::numbers::pi;
-        currentAngle = (angle2 - angle1) * (1 - percentComplete);
-    } else {
-        //Normal Scenario
-        currentAngle = angle2 - (angle2 - angle1) * (1 - percentComplete);
+        cout << angleDiff << " Id: " << ID << endl;
     }
 }
 
@@ -271,6 +268,10 @@ vector<Person> Planet::GetPeople() {
     return peopleList;
 }
 
+PlanetOrbitalCharacteristics Planet::GetOrbitCharacteristicAt(int position) {
+    return orbitalCharacteristics.at(position);
+}
+
 bool Planet::compareResourceAmount(Resource r1, Resource r2) {
     return (r1.GetAmount() < r2.GetAmount());
 }
@@ -282,6 +283,16 @@ bool Planet::compareResourceName(Resource r1, Resource r2) {
 bool Planet::compareResourceHardness(Resource r1, Resource r2) {
     return (r1.GetHardness() < r2.GetHardness());
 }
+
+double Planet::GetCurrentAngle() {
+    return currentAngle;
+}
+
+int Planet::GetOrbitalCharacteristicsSize() {
+    return orbitalCharacteristics.size();
+}
+
+
 
 
 

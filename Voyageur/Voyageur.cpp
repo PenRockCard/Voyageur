@@ -12,10 +12,15 @@ using namespace std;
 bool showDemo = false;
 void GUI_Start();
 void Main_Update();
-MainGame* game = new MainGame();
+MainGame* game;
 int endGame = -1;
 
 int main() {
+
+    cout << fixed;
+    cout << setprecision(5);
+
+    game = new MainGame();
     //Main loop, temp. Move to MainGame.cpp maybe?
     thread threadUpdate(Main_Update);
     thread threadGUI(GUI_Start);
